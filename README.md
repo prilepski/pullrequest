@@ -1,7 +1,7 @@
 # pullrequest
 Tests are located in ./pytests folder
 
-Running tests:
+Running tests:     
 pytest pytests
 
 Getting Code Coverage
