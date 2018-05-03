@@ -6,5 +6,4 @@ from pullrequest import pullrequest
 class TestPullRequest(object):
     def test_pullrequest_creation(self):
         pr = pullrequest.PullRequest(1)
-
         assert pr is not None
