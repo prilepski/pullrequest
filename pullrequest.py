@@ -1,6 +1,26 @@
+import prcheck
+import json
+import requests
+
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 class PullRequest:
-    def __init__(self, prID):
-        self.prID = prID #Pull request ID
+    _PULLS_URL = "/pulls/{}"
+    def __init__(self, restAPI, user, pwd, prID):
+        if restAPI is None:
+            self.restAPI = ""
+        else:
+            self.restAPI = restAPI
+        self.restAPI = self.restAPI.rstrip("//")
+
+        if prID is None:
+            self.prID = 0
+        else:
+            self.prID = prID #Pull request ID
+        
+        self.user = user
+        self.pwd = pwd
         self.state = "" # Pull Request State. TODO: initialize & provide a class for states
         self.title = "" # Pull REquest title. TODO: initialize
         self.body = "" # Pull Request body. TODO: initialize
@@ -9,5 +29,21 @@ class PullRequest:
         self.author = "" # PR origiator
         self.isMeargiable = False # Indication if PR is mergeable
         self.mergeSHA = "" # PR's SHA
-        self.checks = [] # PR status checks. TODO: replays with array of special classes
+        self.checks = [] # PR status checks. Array of PRCheck
+
+    def GetPullInfo(self):
+        if self.restAPI == "" or self.prID == 0:
+            return {}
         
+        response = requests.get(self.restAPI + self._PULLS_URL.format(self.prID), auth=(self.user, self.pwd), verify=False)
+        if not response.ok:
+            return {}
+        else:
+            return response.json()
+
+    def LoadPRfromGitHub(self):
+        if self.prID == 0:
+            return False
+        
+        return True
+
