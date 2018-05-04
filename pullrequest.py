@@ -32,6 +32,11 @@ class PullRequest:
         self.checks = [] # PR status checks. Array of PRCheck
 
     def GetPullInfo(self):
+        """
+        Requests and returns json object for a given PR ID.
+        Requires PullRequest object to be properly initialized with PR ID and URL to repo's REST API
+            :param self: 
+        """   
         if self.restAPI == "" or self.prID == 0:
             return {}
         
