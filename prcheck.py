@@ -40,4 +40,6 @@ class PRCheck:
         if serializedState is None:
             self.serializedState = {}
         else:
-            self.serializedState = serializedState 
+            self.serializedState = serializedState
+        
+        self.statusID = 0 # Status ID from Github. Will be set when check is already stored to / loaded from Github

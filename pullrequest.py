@@ -37,7 +37,10 @@ class PullRequest:
         self.author = "" # PR origiator
         self.isMeargiable = False # Indication if PR is mergeable
         self.mergeSHA = "" # PR's SHA
-        self.checks = [] # PR status checks. Array of PRCheck
+        self.checks = {} # PR status checks. Dictionary of PRChecks
+        self.prJSON = {}
+
+        self.LoadPRfromGitHub() # Load data from Github
 
     def GetPullInfo(self):
         """
@@ -66,8 +69,67 @@ class PullRequest:
         Returns:
             bool: True if loaded successfuly. False otherwise
         """   
-        prJSON = self.GetPullInfo()
-        if len(prJSON) == 0:
+        self.prJSON = self.GetPullInfo()
+        if len(self.prJSON) == 0:
             return False
+        
         return True
 
+    def SaveChecks(self):
+        """
+        creates/updates statuses for Pull Request based on array of checks
+        Args:
+            <None>
+        Returns:
+            dictionary: json response in case of error and empty dictionry if success
+        """   
+        for check in self.checks.items():
+            data = {
+                'state': check.state,
+                'target_url': check.targetURL,
+                'context': check.context,
+                'description': json.dumps(check.serializedState)
+            }
+            
+            resp = requests.post(self.getStatusesURL(), data=json.dumps(data), auth=(self.user, self.pwd), verify=False)
+            if not resp.ok:
+                return resp # Return information on failed items
+            else:
+                # update check with Status ID
+                check.statusID = resp.json().get("id", 0)
+                return {} # returning empty disctionary on success
+
+    def getStatusesURL(self):
+        """
+        returns URL to Github Status REST API call
+        Args:
+            <None>
+        Returns:
+            string: statuses GtiHub API url or empty string in case of errors.
+        """   
+        # TODO: check out how to use interally
+        return self.prJSON.get("statuses_url", "")
+
+    def addCheck(self, context, status, description, target_url):
+        # TODO: creare a class to cover possible context values instead of just plain string
+        """
+        returns URL to Github Status REST API call
+        Args:
+            string: context for status check
+            string: state of the check. MAy take values from CheckStates class
+            string: description to be used for the check
+            straing: target URL To be passed to a check 
+        Returns:
+            PRCheck: returns check object or None (in case of issues)
+        """   
+        if len(context) == 0:
+            return None
+        newCheck = prcheck.PRCheck(status, description, target_url, context)
+
+        self.checks[context] = newCheck
+
+    def delCheck(self, context):
+        if self.checks.pop("context", 0) != 0:
+            return True
+        else:
+            return False
