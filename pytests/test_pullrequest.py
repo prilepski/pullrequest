@@ -108,7 +108,7 @@ class TestPullRequest(object):
         # delete element
         assert pr.delCheck("test check") == True
         #delete it agains
-        assert pr.delCheck("test check") == True
+        assert pr.delCheck("test check") == False
         # delete with empty key
         assert pr.delCheck("") == False
         
