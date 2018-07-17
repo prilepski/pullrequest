@@ -27,24 +27,24 @@ The project is incomplete and slowly evolving (as time permits). Current State s
 
 At this time the following to be used:
 ### Running Tests
-'''
+```
 py.test pytests
-'''
+```
 
 ### Generating Code Coverage
-'''
+```
 py.test --cov=. --cov-report=annotate --cov-report=html
-'''
+```
 
 ### Storing Test Results using JUnit Format
-'''
+```
 py.test --junitxml=./junit.xml
-'''
+```
 
 ### Combinig All of the Above Together
-'''
+```
 py.test --cov=. --cov-report=annotate --cov-report=html --junitxml=./junit.xml
-'''
+```
 
 ## Customization & Extension Possibilities
 [] TBD
@@ -78,5 +78,5 @@ Describes and implementes properties and functionality of a single test result (
 ## TestResults
 Base class implementing properties and functionality of a test result list. A list that consist of instances of TestElement objects.
 
-##JUnitTestResults
+## JUnitTestResults
 Class that inherits and extends basic TestResults implementation to interact with JUnit test result format.
