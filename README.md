@@ -79,4 +79,4 @@ Describes and implementes properties and functionality of a single test result (
 Base class implementing properties and functionality of a test result list. A list that consist of instances of TestElement objects.
 
 ## JUnitTestResults
-Class that inherits and extends basic TestResults implementation to interact with JUnit test result format. 
+Class that inherits and extends basic TestResults implementation to interact with JUnit test result format.   
