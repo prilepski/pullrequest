@@ -9,9 +9,27 @@ import prcheck
 def Mock_ResponseJSON(param):
     return json.load(open("./pytests/datafiles/test_GetPullInfo_positive.json"))
 
+def Mock_RequestsGet(url, auth, verify):
+    return requests.Response()
+
+def Mock_RequestsPost(url, data, auth, verify):
+    return requests.Response()
+
+def Mock_JSON(self):
+    data = {
+        'id': str('1'),
+        'number': str('123')
+    }
+    return data
+
+def Mock_JSON_Negative(self):
+    data = {
+    }
+    return data
+
 class TestPullRequest(object):
     user = "prilepski"
-    pwd = "dmitri0404"
+    pwd = "password"
 
 
     def test_pullrequest_creation(self):
@@ -32,6 +50,8 @@ class TestPullRequest(object):
             assert user == prObject.user
         
         # TODO: use mocks to avoid calling github here
+
+
         CheckPR("https://api.github.com/repos/prilepski", 1, self.user, self.pwd) # Positive Test
         CheckPR(None, 1, self.user, self.pwd) # Negative test: no URL
         CheckPR("https://api.github.com/repos/prilepski", None, self.user, self.pwd) # Negative test: no PR ID
@@ -40,8 +60,6 @@ class TestPullRequest(object):
         CheckPR(None, None, None, None) # Negative test: all missing
 
     def test_GetPullInfo(self, monkeypatch):
-        def Mock_RequestsGet(url, auth, verify):
-            return requests.Response()
 
         # wrong URL
         prID = 1
@@ -122,6 +140,10 @@ class TestPullRequest(object):
 
         pr.checks["test check"] = check
         assert pr.checks["test check"].statusID == 0 # expecting statusID to be 0
+
+        monkeypatch.setattr(requests, 'post', Mock_RequestsPost)
+        monkeypatch.setattr(requests.Response, 'json', Mock_ResponseJSON)
+        
         assert len(pr.SaveChecks()) == 0 # expect empty response (no errors)
-        assert pr.checks["test check"].statusID <> 0 # and now it should be set into something non zero
+        assert pr.checks["test check"].statusID != 0 # and now it should be set into something non zero
 

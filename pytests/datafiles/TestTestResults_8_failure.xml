@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="2" failures="2" name="pytest" skips="0" tests="8" time="2.475"><testcase classname="pytests.test_TestResults.TestTestResults" file="pytests/test_TestResults.py" line="7" name="test_load_test_results" time="0.00920701026917"><failure message="assert 8 == 7
+ +  where 8 = len([&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...])
+ +    where [&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...] = &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt;()
+ +      where &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt; = &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;.GetSuccessfulTests">self = &lt;pullrequest.pytests.test_TestResults.TestTestResults object at 0x7fba18a27750&gt;
+
+    def test_load_test_results(self):
+    
+        testsEmpty = testresults.JUnitTestResults(&apos;&apos;)
+        # Should be no elements
+        assert testsEmpty.GetTestResultsNum() == 0
+    
+        testsEmpty = testresults.JUnitTestResults(None)
+        # Should be no elements
+        assert testsEmpty.GetTestResultsNum() == 0
+    
+        test8OK = testresults.JUnitTestResults(&apos;./pytests/datafiles/TestTestResults_8_success.xml&apos;)
+        assert test8OK.GetTestResultsNum() == 8
+&gt;       assert len(test8OK.GetSuccessfulTests()) == 7
+    
+            &quot;&quot;&quot;
+            with open(&apos;./pytests/datafiles/test_TestResults_output.txt&apos;) as f:
+                lines = f.readlines()
+    
+            # Should be no elements
+            testsEmpty.LoadTestResults(None)
+            assert len(testsEmpty.testResults) == 0
+            # Should be exactly 592 elements
+            assert testsEmpty.LoadTestResults(lines) == 592
+    
+            tests592 = testresults.JUnitTestResults(lines, testresults.TestSystems.JUNIT)
+            # Should be exactly 592 elements
+            assert len(tests592.testResults) == 592
+    
+            # this test must be FAILING
+            assert tests592.GetTestResult(&apos;raid_full_stack_degraded_reboot.py.test_raid_degraded_log_reboot&apos;).result == 0
+    
+            assert tests592.GetTestResult(&apos;&apos;) == None
+E           assert 8 == 7
+E            +  where 8 = len([&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...])
+E            +    where [&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...] = &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt;()
+E            +      where &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt; = &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;.GetSuccessfulTests
+
+pytests/test_TestResults.py:20: AssertionError</failure></testcase><testcase classname="pytests.test_TestResults.TestTestResults" file="pytests/test_TestResults.py" line="41" name="test_RegisterTestResults" time="0.00248193740845"><failure message="AttributeError: type object &apos;JUnitTestResults&apos; has no attribute &apos;golf&apos;">self = &lt;pullrequest.pytests.test_TestResults.TestTestResults object at 0x7fba189c3790&gt;
+
+    def test_RegisterTestResults(self):
+&gt;       testresults.JUnitTestResults.golf()
+            &quot;&quot;&quot;
+            with open(&apos;./pytests/datafiles/test_TestResults_output.txt&apos;) as f:
+                lines = f.readlines()
+    
+            tests592 = testresults.JUnitTestResults(lines, testresults.TestSystems.JUNIT)
+            # Should be exactly 592 elements
+            assert len(tests592.testResults) == 592
+    
+            assert tests592.RegisterTestResults()
+E           AttributeError: type object &apos;JUnitTestResults&apos; has no attribute &apos;golf&apos;
+
+pytests/test_TestResults.py:43: AttributeError</failure></testcase>
+<testcase classname="pytests.test_prcheck.TestPRCheck" file="pytests/test_prcheck.py" line="6" name="test_prcheck_creation" time="0.0044059753418"></testcase><testcase classname="pytests.test_pullrequest.TestPullRequest" file="pytests/test_pullrequest.py" line="16" name="test_pullrequest_creation" time="0.588655948639">
+<error message="assert 8 == 7
+ +  where 8 = len([&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...])
+ +    where [&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...] = &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt;()
+ +      where &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt; = &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;.GetSuccessfulTests">self = &lt;pullrequest.pytests.test_TestResults.TestTestResults object at 0x7fba18a27750&gt;
+
+    def test_load_test_results(self):
+    
+        testsEmpty = testresults.JUnitTestResults(&apos;&apos;)
+        # Should be no elements
+        assert testsEmpty.GetTestResultsNum() == 0
+    
+        testsEmpty = testresults.JUnitTestResults(None)
+        # Should be no elements
+        assert testsEmpty.GetTestResultsNum() == 0
+    
+        test8OK = testresults.JUnitTestResults(&apos;./pytests/datafiles/TestTestResults_8_success.xml&apos;)
+        assert test8OK.GetTestResultsNum() == 8
+&gt;       assert len(test8OK.GetSuccessfulTests()) == 7
+    
+            &quot;&quot;&quot;
+            with open(&apos;./pytests/datafiles/test_TestResults_output.txt&apos;) as f:
+                lines = f.readlines()
+    
+            # Should be no elements
+            testsEmpty.LoadTestResults(None)
+            assert len(testsEmpty.testResults) == 0
+            # Should be exactly 592 elements
+            assert testsEmpty.LoadTestResults(lines) == 592
+    
+            tests592 = testresults.JUnitTestResults(lines, testresults.TestSystems.JUNIT)
+            # Should be exactly 592 elements
+            assert len(tests592.testResults) == 592
+    
+            # this test must be FAILING
+            assert tests592.GetTestResult(&apos;raid_full_stack_degraded_reboot.py.test_raid_degraded_log_reboot&apos;).result == 0
+    
+            assert tests592.GetTestResult(&apos;&apos;) == None
+E           assert 8 == 7
+E            +  where 8 = len([&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...])
+E            +    where [&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...] = &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt;()
+E            +      where &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt; = &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;.GetSuccessfulTests
+
+pytests/test_TestResults.py:20: AssertionError</error></testcase>
+<testcase classname="pytests.test_pullrequest.TestPullRequest" file="pytests/test_pullrequest.py" line="41" name="test_GetPullInfo" time="0.392807006836">
+<error message="assert 8 == 7
+ +  where 8 = len([&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...])
+ +    where [&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...] = &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt;()
+ +      where &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt; = &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;.GetSuccessfulTests">self = &lt;pullrequest.pytests.test_TestResults.TestTestResults object at 0x7fba18a27750&gt;
+
+    def test_load_test_results(self):
+    
+        testsEmpty = testresults.JUnitTestResults(&apos;&apos;)
+        # Should be no elements
+        assert testsEmpty.GetTestResultsNum() == 0
+    
+        testsEmpty = testresults.JUnitTestResults(None)
+        # Should be no elements
+        assert testsEmpty.GetTestResultsNum() == 0
+    
+        test8OK = testresults.JUnitTestResults(&apos;./pytests/datafiles/TestTestResults_8_success.xml&apos;)
+        assert test8OK.GetTestResultsNum() == 8
+&gt;       assert len(test8OK.GetSuccessfulTests()) == 7
+    
+            &quot;&quot;&quot;
+            with open(&apos;./pytests/datafiles/test_TestResults_output.txt&apos;) as f:
+                lines = f.readlines()
+    
+            # Should be no elements
+            testsEmpty.LoadTestResults(None)
+            assert len(testsEmpty.testResults) == 0
+            # Should be exactly 592 elements
+            assert testsEmpty.LoadTestResults(lines) == 592
+    
+            tests592 = testresults.JUnitTestResults(lines, testresults.TestSystems.JUNIT)
+            # Should be exactly 592 elements
+            assert len(tests592.testResults) == 592
+    
+            # this test must be FAILING
+            assert tests592.GetTestResult(&apos;raid_full_stack_degraded_reboot.py.test_raid_degraded_log_reboot&apos;).result == 0
+    
+            assert tests592.GetTestResult(&apos;&apos;) == None
+E           assert 8 == 7
+E            +  where 8 = len([&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...])
+E            +    where [&lt;testresults.TestElement object at 0x7fba189c3490&gt;, &lt;testresults.TestElement object at 0x7fba189c3550&gt;, &lt;testresults....189c3590&gt;, &lt;testresults.TestElement object at 0x7fba189c33d0&gt;, &lt;testresults.TestElement object at 0x7fba189c34d0&gt;, ...] = &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt;()
+E            +      where &lt;bound method JUnitTestResults.GetSuccessfulTests of &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;&gt; = &lt;testresults.JUnitTestResults object at 0x7fba18a27510&gt;.GetSuccessfulTests
+
+pytests/test_TestResults.py:20: AssertionError</error></testcase>
+<testcase classname="pytests.test_pullrequest.TestPullRequest" file="pytests/test_pullrequest.py" line="72" name="test_LoadPRfromGitHub" time="0.00813698768616"></testcase><testcase classname="pytests.test_pullrequest.TestPullRequest" file="pytests/test_pullrequest.py" line="79" name="test_add_del_Check" time="0.32811999321"></testcase><testcase classname="pytests.test_pullrequest.TestPullRequest" file="pytests/test_pullrequest.py" line="116" name="test_SaveChecks" time="0.607889890671"></testcase></testsuite>
