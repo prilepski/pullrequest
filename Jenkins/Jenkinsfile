@@ -1,4 +1,3 @@
-// Sample pipeline for hanlding pull requests merges
 pipeline {
     agent any
     stages {
