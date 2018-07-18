@@ -1,0 +1,28 @@
+// Sample pipeline for hanlding pull requests merges
+pipeline {
+    agent any
+    stages {
+        stage('Check PR Status') {
+            steps {
+
+            }
+        }
+        stage('Build') {
+            steps {
+
+            }
+        }
+
+        stage('Test') {
+            steps {
+
+            }
+        }
+
+        stage('Merge') {
+            steps {
+
+            }
+        }
+    }
+}
