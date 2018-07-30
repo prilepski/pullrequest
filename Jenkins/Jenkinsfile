@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    stages {
+        stage('Check PR Status') {
+            steps {
+                echo 'There will be Pull Request validation'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'There will be build here'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'There will be test here'
+            }
+        }
+
+        stage('Merge') {
+            steps {
+                echo 'There will be merge here'
+            }
+        }
+    }
+}
